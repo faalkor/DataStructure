@@ -82,20 +82,14 @@ void add() {
                 auxPos = ftell(PeopleArch);
                 fread(&person,SIZE,1,PeopleArch);
 
+                // sinaliza que não há elemento após auxiliar
                 if (feof(PeopleArch)) {
                     printf("fim2\n"); 
                     flag = 'B';
                 }
+
                 fseek(PeopleArch, auxPos, 0);
                 fwrite (&auxPerson, SIZE, 1, PeopleArch);
-                if (feof(PeopleArch)) {
-                    printf("fim3\n"); 
-                    flag = 'B';
-                }
-                printf("SEGUNDO WRITE");
-                if (flag == 'B')
-                    break;
-                }
         }            
         while (flag != 'B');
 
