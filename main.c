@@ -32,6 +32,7 @@ int main() {
             break;
 
         case 'L':
+            listAll();
             break;
         }
     }
