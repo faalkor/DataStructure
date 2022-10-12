@@ -90,10 +90,10 @@ void add() {
 
                 fseek(PeopleArch, auxPos, 0);
                 fwrite (&auxPerson, SIZE, 1, PeopleArch);
-        }            
-        while (flag != 'B');
+            }
+        }           
+        while(flag != 'B');
 
-        
         // escreve arquivo a ser inserido
         fseek(PeopleArch, i, 0);
         strcpy(person.name,name);
@@ -106,6 +106,7 @@ void add() {
         return;   
     }
 }
+
 
 
 void listAll() {
