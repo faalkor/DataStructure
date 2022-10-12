@@ -67,39 +67,40 @@ void add() {
             fread(&person, SIZE, 1, PeopleArch);
             auxPos = ftell(PeopleArch);
             fread(&auxPerson, SIZE, 1, PeopleArch);
+
+            // deslocar só 1 item
             if (feof(PeopleArch)) {
-                printf("fim1\n"); //1 item deslocado
+                fseek(PeopleArch, auxPos, 0);
+                fwrite(&person, SIZE, 1, PeopleArch);
                 flag = 'B';
             }
-            fseek(PeopleArch, auxPos, 0);
-            fwrite(&person, SIZE, 1, PeopleArch);
-            if (flag == 'B') {
-                printf("ALO\n");
-                break;
-            }
-            printf("ESCREVEU o 10\n");
-            auxPos = ftell(PeopleArch);
-            
-            fread(&person,SIZE,1,PeopleArch);
-            if (feof(PeopleArch)) {
-                printf("fim2\n"); 
-                flag = 'B';
-            }
-            fseek(PeopleArch, auxPos, 0);
-            fwrite (&auxPerson, SIZE, 1, PeopleArch);
-            if (feof(PeopleArch)) {
-                printf("fim3\n"); 
-                flag = 'B';
-            }
-            printf("SEGUNDO WRITE");
-            if (flag == 'B')
-                break;
-            
+
+            // deslocar +1 item
+            else {
+                fseek(PeopleArch, auxPos, 0);
+                fwrite(&person, SIZE, 1, PeopleArch);
+                auxPos = ftell(PeopleArch);
+                fread(&person,SIZE,1,PeopleArch);
+
+                if (feof(PeopleArch)) {
+                    printf("fim2\n"); 
+                    flag = 'B';
+                }
+                fseek(PeopleArch, auxPos, 0);
+                fwrite (&auxPerson, SIZE, 1, PeopleArch);
+                if (feof(PeopleArch)) {
+                    printf("fim3\n"); 
+                    flag = 'B';
+                }
+                printf("SEGUNDO WRITE");
+                if (flag == 'B')
+                    break;
+                }
         }            
         while (flag != 'B');
 
         
-        
+        // escreve arquivo a ser inserido
         fseek(PeopleArch, i, 0);
         strcpy(person.name,name);
         strcpy(person.id, id);
@@ -108,8 +109,7 @@ void add() {
         regPeople++;
         fclose(PeopleArch);
         PeopleArch = fopen("population.dat", "a+b");
-        return;
-               
+        return;   
     }
 }
 
